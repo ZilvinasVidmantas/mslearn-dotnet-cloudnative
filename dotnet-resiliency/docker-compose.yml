@@ -1,7 +1,6 @@
 version: '3.4'
 
 services: 
-
   frontend:
     image: store:latest
     environment: 

@@ -2,39 +2,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: storefrontend
+    name: productsbackend
 spec:
   replicas: 1
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
-        app: storefrontend
+        app: productsbackend
     spec:
       containers:
-      - name: storefrontend
-        image: zilwa/storeimage:latest
+      - name: productsbackend
+        image: zilwa/productsimage:latest
         ports:
         - containerPort: 80
         env:
         - name: ASPNETCORE_URLS
           value: http://*:80
-        - name: ProductEndpoint
-          value: http://productsbackend
   selector:
     matchLabels:
-      app: storefrontend
+      app: productsbackend
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: storefrontend
+  name: productsbackend
 spec:
   type: NodePort
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 32000
+    nodePort: 32001
   selector:
-    app: storefrontend
+    app: productsbackend

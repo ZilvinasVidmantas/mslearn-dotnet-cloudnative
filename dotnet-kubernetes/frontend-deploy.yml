@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,8 +6,6 @@ spec:
   replicas: 1
   template:
     metadata:
-      annotations:
-        linkerd.io/inject: enabled
       labels:
         app: storefrontend
     spec:
