@@ -16,6 +16,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Add observability code here
+builder.Services.AddObservability("Store", builder.Configuration);
 
 
 var app = builder.Build();
@@ -36,4 +37,5 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+app.MapObservability();
 app.Run();

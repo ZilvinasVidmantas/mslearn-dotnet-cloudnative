@@ -44,6 +44,7 @@ public static class ProductEndpoints
 
             return affected == 1 ? Results.Ok() : Results.NotFound();
         })
+        
         .WithName("UpdateProduct")
         .Produces(StatusCodes.Status404NotFound)
         .Produces(StatusCodes.Status204NoContent);
@@ -83,16 +84,19 @@ public static class ProductEndpoints
         .Produces<Product>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status404NotFound);
 
-        stock.MapPut("/{id}", async  (int id, int stockAmount, ProductDataContext db) =>
+        stock.MapPut("/{id}", async  (int id, int stockAmount, ProductDataContext db, ProductsMetrics metrics) =>
         {
+            // Increment the stock change metric.
+            metrics.StockChange(stockAmount);
+
             var affected = await db.Product
                 .Where(model => model.Id == id)
                 .ExecuteUpdateAsync(setters => setters
-                  .SetProperty(m => m.Stock, stockAmount)
+                .SetProperty(m => m.Stock, stockAmount)
                 );
 
             return affected == 1 ? Results.Ok() : Results.NotFound();
-        })
+        }) 
         .WithName("UpdateStockById")
         .Produces<Product>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status404NotFound);
