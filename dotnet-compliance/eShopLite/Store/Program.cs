@@ -1,5 +1,7 @@
 using Store.Components;
 using Store.Services;
+using Microsoft.Extensions.Compliance.Classification;
+using Microsoft.Extensions.Compliance.Redaction;
 
 var builder = WebApplication.CreateBuilder(args);
  
@@ -12,8 +14,21 @@ builder.Services.AddHttpClient<ProductService>(c =>
 });
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder.Services
+    .AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddRedaction(configure =>
+{
+    configure.SetRedactor<ErasingRedactor>(new DataClassificationSet(DataClassifications.EUPDataClassification));
+    configure.SetRedactor<EShopCustomRedactor>(new DataClassificationSet(DataClassifications.EUIIDataClassification));
+});
+
+builder.Services.AddLogging(logging => 
+{
+    logging.EnableRedaction();
+    logging.AddJsonConsole(); //Enable structure logs on the console to view the redacted data.
+});
 
 // Add redaction
 
