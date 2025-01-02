@@ -6,7 +6,7 @@ services:
     image: store:latest
     environment: 
       - ProductEndpoint=http://backend:8080
-      - ConnectionStrings:AppConfig=[PASTE CONNECTION STRING HERE]
+      - ConnectionStrings:AppConfig=Endpoint=https://eshop-app-features3043845500.azconfig.io;Id=77da;Secret=4RFlcczDG2kgnmVyhbYZ9OIY4twSDDJsnJB2t3TT9exN1WQdycZfJQQJ99BAACE1Pydbses3AAACAZAC4CUT
     ports:
       - "32000:8080"
     depends_on: 
