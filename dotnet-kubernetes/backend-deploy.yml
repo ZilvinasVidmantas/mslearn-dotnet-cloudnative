@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: productsbackend
-        image: zilwa/productsimage:latest
+        image: acseshop1826934829.azurecr.io/productservice:v1
         ports:
         - containerPort: 80
         env:

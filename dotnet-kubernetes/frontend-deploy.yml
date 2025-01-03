@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: storefrontend
-        image: zilwa/storeimage:latest
+        image: acseshop1826934829.azurecr.io/storeimage:v1
         ports:
         - containerPort: 80
         env:
